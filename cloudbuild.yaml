@@ -42,7 +42,7 @@ steps:
       - '--zone=northamerica-northeast1-a'
       - '--machine-type=e2-small'
       - '--image=projects/cos-cloud/global/images/cos-stable-109-17800-66-33'
-      - '--container-image=r.io/$PROJECT_ID/backend/api:latest'
+      - '--container-image=gcr.io/$PROJECT_ID/backend/api:latest'
       - '--container-env=workload=worker'
       - '--labels=goog-ec-src=vm_add-gcloud,container-vm=cos-stable-109-17800-66-33'
 images:
