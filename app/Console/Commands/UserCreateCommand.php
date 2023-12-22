@@ -51,5 +51,7 @@ class UserCreateCommand extends Command
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ])->assignRole($role);
+
+        $this->info('User created successfully.');
     }
 }

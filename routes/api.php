@@ -3,6 +3,8 @@
 use App\Http\Controllers\v1\ProfileController;
 use App\Http\Controllers\v1\ProfileSubscriptionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 Route::get('/', function () {
+    Artisan::queue('user:create');
     return ['this-is-laravel-api' => app()->version()];
 })->name('home.api');
 
