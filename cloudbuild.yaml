@@ -30,7 +30,7 @@ steps:
       - managed
       - '--memory'
       - 512Mi
-      - '--update-env-vars'
+      
     id: Deploy
 
   # - name: gcr.io/cloud-builders/gcloud
