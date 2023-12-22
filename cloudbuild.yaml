@@ -61,6 +61,6 @@ steps:
   #   id: Deploy-Worker
 
 images:
-  - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/backend/api:latest'
 options:
   substitutionOption: ALLOW_LOOSE
