@@ -21,7 +21,7 @@ steps:
       - run
       - deploy
       - '--allow-unauthenticated'
-      - '${_CLOUD_RUN_SERVICE}'
+      - 'laravel-api'
       - '--image'
       - 'gcr.io/$PROJECT_ID/backend/api:latest'
       - '--region'
