@@ -1,37 +1,37 @@
 steps:
-  # - name: 'gcr.io/cloud-builders/gsutil'
-  #   args: ['cp', 'gs://laravel-demo-config/.env', '.']
-  # - name: gcr.io/cloud-builders/docker
-  #   args:
-  #     - build
-  #     - '--no-cache'
-  #     - '-t'
-  #     - 'gcr.io/$PROJECT_ID/backend/api:latest'
-  #     - .
-  #     - '--build-arg'
-  #     - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
-  #   id: Docker Build
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'gs://laravel-demo-config/.env', '.']
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '--no-cache'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/backend/api:latest'
+      - .
+      - '--build-arg'
+      - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
+    id: Docker Build
 
-  # - name: gcr.io/cloud-builders/docker
-  #   args:
-  #     - push
-  #     - 'gcr.io/$PROJECT_ID/backend/api:latest'
-  #   id: Docker image Push
-  # - name: gcr.io/cloud-builders/gcloud
-  #   args:
-  #     - run
-  #     - deploy
-  #     - '--allow-unauthenticated'
-  #     - 'laravel-api'
-  #     - '--image'
-  #     - 'gcr.io/$PROJECT_ID/backend/api:latest'
-  #     - '--region'
-  #     - 'asia-south1'
-  #     - '--platform'
-  #     - managed
-  #     - '--memory'
-  #     - 512Mi
-  #   id: Deploy api
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - 'gcr.io/$PROJECT_ID/backend/api:latest'
+    id: Docker image Push
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - '--allow-unauthenticated'
+      - 'laravel-api'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/backend/api:latest'
+      - '--region'
+      - 'asia-south1'
+      - '--platform'
+      - managed
+      - '--memory'
+      - 512Mi
+    id: Deploy api
   - name: 'gcr.io/cloud-builders/gcloud'
     id: Deploy worker
     args:
@@ -45,7 +45,7 @@ steps:
       - '--container-image=gcr.io/$PROJECT_ID/backend/api:latest'
       - '--container-env=workload=worker'
       - '--labels=goog-ec-src=vm_add-gcloud,container-vm=cos-stable-109-17800-66-33'
-# images:
-#   - 'gcr.io/$PROJECT_ID/backend/api:latest'
+images:
+  - 'gcr.io/$PROJECT_ID/backend/api:latest'
 options:
   substitutionOption: ALLOW_LOOSE
