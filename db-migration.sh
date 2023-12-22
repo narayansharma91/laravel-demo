@@ -6,5 +6,5 @@ apache2-foreground
 
 if [[ $workload -eq 'worker' ]]
 then
-php artisan queue:listen &
+nohup php artisan queue:listen &
 fi
