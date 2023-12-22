@@ -10,14 +10,13 @@ steps:
       - .
       - '--build-arg'
       - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
-    id: Build
+    id: Docker Build
 
   - name: gcr.io/cloud-builders/docker
     args:
       - push
       - 'gcr.io/$PROJECT_ID/backend/api:latest'
-    id: Push
-
+    id: Docker image Push
   - name: gcr.io/cloud-builders/gcloud
     args:
       - run
@@ -32,19 +31,20 @@ steps:
       - managed
       - '--memory'
       - 512Mi
-    id: Deploy
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - 'compute'
-  - 'instances'
-  - 'create-with-container'
-  - 'laravel-worker'
-  - '--zone=northamerica-northeast1-a'
-  - '--machine-type=e2-small'
-  - '--image=projects/cos-cloud/global/images/cos-stable-109-17800-66-33'
-  - '--container-image=r.io/$PROJECT_ID/backend/api:latest'
-  - '--container-env=workload=worker'
-  - '--labels=goog-ec-src=vm_add-gcloud,container-vm=cos-stable-109-17800-66-33'
+    id: Deploy api
+  - name: 'gcr.io/cloud-builders/gcloud'
+   id: Deploy worker
+    args:
+    - 'compute'
+    - 'instances'
+    - 'create-with-container'
+    - 'laravel-worker'
+    - '--zone=northamerica-northeast1-a'
+    - '--machine-type=e2-small'
+    - '--image=projects/cos-cloud/global/images/cos-stable-109-17800-66-33'
+    - '--container-image=r.io/$PROJECT_ID/backend/api:latest'
+    - '--container-env=workload=worker'
+    - '--labels=goog-ec-src=vm_add-gcloud,container-vm=cos-stable-109-17800-66-33'
 images:
   - 'gcr.io/$PROJECT_ID/backend/api:latest'
 options:
