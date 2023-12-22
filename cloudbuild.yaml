@@ -48,4 +48,4 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/backend/api:latest'
 options:
-  substitutionOption: ALLOW_LOOSE
+  substitutionOption: ALLOW_LOOSE 
