@@ -84,8 +84,6 @@ RUN if [ "$BUILD" = "local" ] ; then cp .env.example .env.testing ; else ls -al 
 RUN if [ "$BUILD" = "local" ] ; then ls -al ; else composer install --no-dev -n --prefer-dist ; fi
 RUN if [ "$BUILD" = "local" ] ; then ls -al ; else chmod -R 0777 public storage bootstrap ; fi
 
-RUN if [ "$BUILD" = "local" ] ; then ls -al ; else sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf ; fi
-
 RUN chmod +x /var/www/html/db-migration.sh
 
 ENTRYPOINT ["/var/www/html/db-migration.sh"]
