@@ -1,4 +1,6 @@
 steps:
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'gs://laravel-demo-config/.env', '.']
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -32,34 +34,6 @@ steps:
       - 512Mi
       
     id: Deploy
-
-  # - name: gcr.io/cloud-builders/gcloud
-  #   args:
-  #     - run
-  #     - deploy
-  #     - '--allow-unauthenticated'
-  #     - 'worker-${_CLOUD_RUN_SERVICE}'
-  #     - '--image'
-  #     - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-  #     - '--region'
-  #     - $_DEPLOY_REGION
-  #     - '--platform'
-  #     - managed
-  #     - '--memory'
-  #     - 512Mi
-  #     - '--update-env-vars'
-  #     - >-
-  #       APP_DEBUG=${_APP_DEBUG},
-  #       APP_KEY=${_APP_KEY},
-  #       APP_NAME=${_APP_NAME},
-  #       APP_ENV=${_APP_ENV},
-  #       DB_DATABASE=${_DB_DATABASE},
-  #       DB_USERNAME=${_DB_USERNAME},
-  #       DB_PASSWORD=${_DB_PASSWORD},
-  #       DB_PORT=${_DB_PORT},
-  #       GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-  #   id: Deploy-Worker
-
 images:
   - 'gcr.io/$PROJECT_ID/backend/api:latest'
 options:
