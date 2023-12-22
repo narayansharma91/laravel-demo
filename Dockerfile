@@ -56,6 +56,8 @@ RUN apt-get install -y nodejs
 ARG BUILD
 ENV BUILD=${BUILD}
 
+ARG PORT
+ENV PORT=${PORT}
 
 RUN service apache2 restart
 
