@@ -4,7 +4,7 @@ steps:
       - build
       - '--no-cache'
       - '-t'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/backend/api:latest'
       - .
       - '--build-arg'
       - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
@@ -13,7 +13,7 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/backend/api:latest'
     id: Push
 
   - name: gcr.io/cloud-builders/gcloud
@@ -23,64 +23,44 @@ steps:
       - '--allow-unauthenticated'
       - '${_CLOUD_RUN_SERVICE}'
       - '--image'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/backend/api:latest'
       - '--region'
-      - $_DEPLOY_REGION
+      - 'asia-south1'
       - '--platform'
       - managed
       - '--memory'
       - 512Mi
       - '--update-env-vars'
-      - >-
-        APP_DEBUG=${_APP_DEBUG},
-        APP_KEY=${_APP_KEY},
-        APP_NAME=${_APP_NAME},
-        APP_ENV=${_APP_ENV},
-        DB_DATABASE=${_DB_DATABASE},
-        DB_USERNAME=${_DB_USERNAME},
-        DB_PASSWORD=${_DB_PASSWORD},
-        DB_PORT=${_DB_PORT},
-        GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
     id: Deploy
 
-  - name: gcr.io/cloud-builders/gcloud
-    args:
-      - run
-      - deploy
-      - '--allow-unauthenticated'
-      - 'worker-${_CLOUD_RUN_SERVICE}'
-      - '--image'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-      - '--region'
-      - $_DEPLOY_REGION
-      - '--platform'
-      - managed
-      - '--memory'
-      - 512Mi
-      - '--update-env-vars'
-      - >-
-        APP_DEBUG=${_APP_DEBUG},
-        APP_KEY=${_APP_KEY},
-        APP_NAME=${_APP_NAME},
-        APP_ENV=${_APP_ENV},
-        DB_DATABASE=${_DB_DATABASE},
-        DB_USERNAME=${_DB_USERNAME},
-        DB_PASSWORD=${_DB_PASSWORD},
-        DB_PORT=${_DB_PORT},
-        GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-    id: Deploy-Worker
+  # - name: gcr.io/cloud-builders/gcloud
+  #   args:
+  #     - run
+  #     - deploy
+  #     - '--allow-unauthenticated'
+  #     - 'worker-${_CLOUD_RUN_SERVICE}'
+  #     - '--image'
+  #     - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+  #     - '--region'
+  #     - $_DEPLOY_REGION
+  #     - '--platform'
+  #     - managed
+  #     - '--memory'
+  #     - 512Mi
+  #     - '--update-env-vars'
+  #     - >-
+  #       APP_DEBUG=${_APP_DEBUG},
+  #       APP_KEY=${_APP_KEY},
+  #       APP_NAME=${_APP_NAME},
+  #       APP_ENV=${_APP_ENV},
+  #       DB_DATABASE=${_DB_DATABASE},
+  #       DB_USERNAME=${_DB_USERNAME},
+  #       DB_PASSWORD=${_DB_PASSWORD},
+  #       DB_PORT=${_DB_PORT},
+  #       GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
+  #   id: Deploy-Worker
 
 images:
   - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
 options:
   substitutionOption: ALLOW_LOOSE
-substitutions:
-  _APP_KEY: ''
-  _APP_NAME: ''
-  _DB_PASSWORD: ''
-  _APP_DEBUG: 'true'
-  _DB_USERNAME: ''
-  _DB_PORT: '5432'
-  _APP_ENV: production
-  _DB_DATABASE: ''
-  _CLOUD_RUN_SERVICE: tm-api
