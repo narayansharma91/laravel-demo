@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     Artisan::queue('test:command');
+    return 'success';
 })->name('home');
 
 Route::get('/api', function () {
