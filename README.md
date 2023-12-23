@@ -1,4 +1,4 @@
-### Prerequisites 
+### Prerequisites  
 
 1. Git - To clone this repo
 2. Docker and docker-compose - To run the app
