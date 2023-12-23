@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::get('/', function () {
     Artisan::queue('user:create');
-    return ['this-is-laravel-api' => app()->version()];
+    return ['this-is-laravel-api' => "Hello Laravel"];
 })->name('home.api');
 
 require __DIR__ . '/auth.php';
