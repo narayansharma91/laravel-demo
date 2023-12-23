@@ -13,9 +13,9 @@ class Test extends Command
 {
     protected $signature = 'test:command';
 
-    protected $description = 'Command to test log'
+    protected $description = 'Command to test log';
 
-    
+
     public function handle()
     {
         Log::info('Testing worker');
