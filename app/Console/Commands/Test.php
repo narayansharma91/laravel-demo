@@ -15,7 +15,8 @@ class Test extends Command
 
     protected $description = 'Command to test log'
 
-    public function handle(): bool
+    
+    public function handle()
     {
         Log::info('Testing worker');
     }
