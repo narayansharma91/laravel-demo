@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\RoleListController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    Artisan::queue('test:command');
 })->name('home');
 
 Route::get('/api', function () {
